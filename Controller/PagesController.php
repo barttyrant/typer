@@ -14,8 +14,8 @@ class PagesController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();        
         if (!empty($this->params['pass'][0])) {
-            if (stripos($this->params['pass'][0], 'regulamin') !== false) {
-                $this->activePageLink = 'regulamin';
+            if (stripos($this->params['pass'][0], 'rules') !== false) {
+                $this->activePageLink = 'rules';
             }
         }
 
@@ -48,6 +48,6 @@ class PagesController extends AppController {
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));
-        
+       
 	}    
 }

@@ -23,7 +23,7 @@ class EventsController extends AppController {
     
     
     public function index() {
-        $this->activePageLink = 'zaklady';
+        $this->activePageLink = 'events';
         $userData = $this->Auth->user();
 
         if (empty($userData)) {

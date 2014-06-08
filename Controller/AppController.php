@@ -7,8 +7,8 @@ App::uses('User', 'Model');
 class AppController extends Controller {
     
     public $activePageLink = 'start';
-    public $metaDescription = 'Typer biurowy';
-    public $metaKeywords = 'Typer biurowy';
+    public $metaDescription = 'Typer biurowy IC - 2014';
+    public $metaKeywords = 'Typer biurowy IC - 2014';
     public $loggedUser = array();
     
     public $uses = array('User');
@@ -18,9 +18,9 @@ class AppController extends Controller {
         'FlashReporting.Report',
         'FormFiltering.FormFilter',
         'MathCaptcha',
-//        'Security' => array(
-//             'csrfUseOnce' => false
-//        )
+        'Security' => array(
+             'csrfUseOnce' => false
+        )
     );   
     
     
@@ -28,13 +28,9 @@ class AppController extends Controller {
     public $helpers = array('Html', 'Form', 'Session', 'Number', 'Paginator');
     
     public function beforeFilter(){
-//        $this->Auth->allow();
-//        $a = $this->Auth->user();
-//        var_dump($a);
-//        die('dupa');
         $this->_setUpAuth();
         $this->_checkAdminAccess();
-//        $this->Security->blackHoleCallback = 'blackhole';
+        $this->Security->blackHoleCallback = 'blackhole';
         $this->loggedUser = $this->Auth->user();                
         $this->set('pageLinks', $this->_getPageLinks());
         
@@ -91,16 +87,16 @@ class AppController extends Controller {
                 'url' => '/'
             ),
             array(
-                'name' => 'zaklady',
-                'url' => '/zaklady'
+                'name' => 'events',
+                'url' => '/events'
             ),
             array(
                 'name' => 'ranking',
                 'url' => '/ranking'
             ),
             array(
-                'name' => 'regulamin',
-                'url' => '/regulamin'
+                'name' => 'rules',
+                'url' => '/rules'
             ),
         );
         if($this->Auth->user('role') == User::ROLE_ADMIN){

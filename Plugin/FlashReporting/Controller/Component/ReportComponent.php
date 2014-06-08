@@ -24,19 +24,25 @@ class ReportComponent extends Component {
         'flashCssClass' => 'flashMessage',
     );
 
-
-    function initialize(Controller $controller) {
-        $this->controller =& $controller;        
-//        $this->setSettings($settings);
+    /**
+     * @param \ComponentCollection $collection
+     * @param array $settings
+     */
+    public function __construct(\ComponentCollection $collection, array $settings = array()) {
+        parent::__construct($collection, $settings);
+        $this->_setSettings($settings);
     }
 
 
+    function initialize(Controller $controller) {
+        $this->controller =& $controller;
+    }
     
     /**
      * sets up the component settings
      * @param array $settings 
      */
-    public function setSettings($settings) {
+    protected function _setSettings($settings) {
         $this->_settings = array_merge($this->_defaultSettings, $settings);
     }
     

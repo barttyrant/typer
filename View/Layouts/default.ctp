@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
+        <title><?php echo $title_for_layout; ?></title>
         <?php echo $this->Html->meta('description', $metaDescription); ?>
         <?php echo $this->Html->meta('keywords', $metaKeywords); ?>
         <?php echo $this->Html->meta('charset', 'utf-8'); ?>
         <?php echo $this->Html->meta('favicon.png', '/favicon.png', array('type' => 'icon')); ?>
-        <?php echo $title_for_layout; ?>
         <?php echo $this->Html->css('fonts/sensation'); ?>
         <?php echo $this->Html->css('style'); ?>
         <?php echo $this->Html->css('flash_messages'); ?>
@@ -25,15 +25,10 @@
                 ?>
                 <div class="koko">
                     <?php
-                    echo $this->Html->image('chicken.png', array(
-                        'title' => 'Koko Euro 2012', 'alt' => 'Koko Euro 2012',
+                    echo $this->Html->image('brazil.png', array(
+                        'title' => 'World Cup 2014 Brazil', 'alt' => 'World Cup 2014 Brazil',
                     ));
-                    ?>                    
-                    <?php
-                    echo $this->Html->image('uefa_euro_2012_logo.png', array(
-                        'title' => 'Koko Euro 2012', 'alt' => 'Koko Euro 2012',
-                    ));
-                    ?>                    
+                    ?>                                        
                 </div>
             </div>
             <?php echo $this->Session->flash(); ?>

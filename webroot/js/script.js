@@ -37,6 +37,11 @@ function flashMessages(){
             $(this).delay(hideDelay).slideUp(200);
         }
     });
+
+    //hide on click
+    $('div.flashMessage').bind('click', function(){
+        $(this).slideUp(200);
+    });
 }
 
 

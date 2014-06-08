@@ -143,7 +143,7 @@ img.aligncenter {
 }
 
 #wrapper {
-    margin: 10px auto;
+    margin: 0px auto;
     padding: 0;
 }
 
@@ -726,14 +726,15 @@ div#info, div#stats{
 }
 
 #topbar{
-    margin: 0 auto;
+    margin: 10px auto;
     height: 80px;
     width: 1000px;
+    padding:0;
 }
 
 #topbar .logo{
     float:left;
-    width: 200px;    
+    width: 320px;
 }
 
 #topbar .koko img{
