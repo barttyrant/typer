@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * User Model
  *
@@ -7,20 +9,18 @@ App::uses('AppModel', 'Model');
  * @property Group $Group
  */
 class User extends AppModel {
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'email';
 
-	
+    /**
+     * Display field
+     *
+     * @var string
+     */
+    public $displayField = 'email';
+
     const GENDER_MALE = 1;
     const GENDER_FEMALE = 2;
-    
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_USER = 'USER';
-    
     const LOGIN_MIN_LENGTH = 4;
     const LOGIN_MAX_LENGTH = 60;
     const FIRSTNAME_MIN_LENGTH = 2;
@@ -29,23 +29,20 @@ class User extends AppModel {
     const LASTNAME_MAX_LENGTH = 40;
     const PASSWORD_MIN_LENGTH = 7;
     const PASSWORD_MAX_LENGTH = 40;
-    
     const DEFAULT_POINTS_AMMOUNT = 100;
     const DEFAULT_DEPOSIT = 20;
-    
     const STATUS_NEW = 'NEW';
     const STATUS_ACCEPTED = 'ACCEPTED';
-    
+
     public $validate = array();
-    
     public $hasMany = array('Bet');
-    
+
     public function beforeValidate($options = array()) {
         parent::beforeValidate($options);
         $this->_prepareValidationRules();
     }
-    
-    protected function _prepareValidationRules(){
+
+    protected function _prepareValidationRules() {
         $this->validate = array(
             'login' => array(
                 'alphaNumeric' => array(
@@ -81,69 +78,64 @@ class User extends AppModel {
                     'message' => __('The lenght of this field must be between 2 and 30 characters', true)
                 ),
             ),
-            'gender' => array(
-                'zero_one' => array(
-                    'rule' => array('inList', array(self::GENDER_FEMALE, self::GENDER_MALE)),
-                    'message' => __('Hmmm, sorry but this gender looks a bit strange even for these days...', true)
-                )
-            ),
-            'password_' => array(
-                'between' => array(
-                    'rule' => array('between', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
-                    'message' => __('The lenght of Your password must be between %1$s and %2$s characters', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
-                    'allowEmpty' => false
-                ),
-                'repeat_valid' => array(
-                    'rule' => '_repeatValid',
-                    'message' => __('Passwords must be equal', true),                    
-                )
-            )
+//            'gender' => array(
+//                'zero_one' => array(
+//                    'rule' => array('inList', array(self::GENDER_FEMALE, self::GENDER_MALE)),
+//                    'message' => __('Hmmm, sorry but this gender looks a bit strange even for these days...', true)
+//                )
+//            ),
+//            'password_' => array(
+//                'between' => array(
+//                    'rule' => array('between', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
+//                    'message' => __('The lenght of Your password must be between %1$s and %2$s characters', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
+//                    'allowEmpty' => false
+//                ),
+//                'repeat_valid' => array(
+//                    'rule' => '_repeatValid',
+//                    'message' => __('Passwords must be equal', true),
+//                )
+//            )
         );
     }
-    
+
     /**
      * Creates new user
      * @param array $data
      * @param array $params
      * @return ...
      */
-    public function addNew($data, $params = array()){        
+    public function addNew($data, $params = array()) {
         $defaultData = array(
             'role' => self::ROLE_USER,
             'status' => self::STATUS_NEW
         );
-        
-        if(isset($data['User'])){
+
+        if (isset($data['User'])) {
             $data = $data['User'];
         }
-        
+
         $data = array_merge($defaultData, $data);
         $this->create();
         return $this->save($data, $params);
     }
-    
-    
-    public function getGenders(){
+
+    public function getGenders() {
         return array(
             self::GENDER_MALE => __('male', true),
             self::GENDER_FEMALE => __('female', true),
         );
     }
-    
-    public function getStatuses(){
+
+    public function getStatuses() {
         return array(
             self::STATUS_ACCEPTED => __('accepted', true),
             self::STATUS_NEW => __('new', true),
         );
     }
-    
-    protected function _repeatValid($field){
-        return 
-            !empty($this->data['User']['password_']) 
-        &&  !empty($this->data['User']['password_repeat'])
-        &&  $this->data['User']['password_'] == $this->data['User']['password_repeat'];
+
+    protected function _repeatValid($field) {
+        return
+                !empty($this->data['User']['password_']) && !empty($this->data['User']['password_repeat']) && $this->data['User']['password_'] == $this->data['User']['password_repeat'];
     }
-    
-    
-    
+
 }

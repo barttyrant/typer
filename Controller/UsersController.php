@@ -81,7 +81,7 @@ class UsersController extends AppController {
         endif;
         
         if($this->request->is('post')){
-            $data = $this->request->data; 
+            $data = $this->request->data;
             
             $validCaptchaAnswer = $this->MathCaptcha->validate($data['User']['captcha']);                        
             
@@ -221,7 +221,7 @@ class UsersController extends AppController {
     }
     
     
-    public function admin_dashboard(){
+    public function admin_dashboard(){        
         $this->_prepareDashBoard();
     }
     
@@ -246,8 +246,8 @@ class UsersController extends AppController {
         
         $stake = $totalUsers * User::DEFAULT_DEPOSIT;
         
-        $dateStart = strtotime('2012-06-08 18:00:00');
-        $dateEnd = strtotime('2012-07-02');
+        $dateStart = strtotime('2014-06-12 22:00:00');
+        $dateEnd = strtotime('2014-07-13 23:59:00');
         $now = strtotime(date('Y-m-d H:i:s'));
         
         $tournamentProgress = max(0, round(100*(($now - $dateStart) / ($dateEnd - $dateStart)), 2)) . '%';

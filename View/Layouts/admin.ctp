@@ -5,7 +5,7 @@ DOCTYPE html>
         <?php echo $this->Html->meta('keywords', $metaKeywords);?>
         <?php echo $this->Html->meta('charset', 'utf-8');?>
         <?php echo $this->Html->meta('favicon.png', '/favicon.png', array('type' => 'icon')); ?>
-        <?php echo $this->title_for_layout;?>
+        <?php echo $title_for_layout;?>
         <?php echo $this->Html->css('fonts/sensation'); ?>
         <?php echo $this->Html->css('style'); ?>
         <?php echo $this->Html->css('flash_messages'); ?>

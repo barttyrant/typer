@@ -18,9 +18,9 @@ class AppController extends Controller {
         'FlashReporting.Report',
         'FormFiltering.FormFilter',
         'MathCaptcha',
-        'Security' => array(
-             'csrfUseOnce' => false
-        )
+//        'Security' => array(
+//             'csrfUseOnce' => false
+//        )
     );   
     
     
@@ -28,7 +28,10 @@ class AppController extends Controller {
     public $helpers = array('Html', 'Form', 'Session', 'Number', 'Paginator');
     
     public function beforeFilter(){
-        $this->Auth->allow();
+//        $this->Auth->allow();
+//        $a = $this->Auth->user();
+//        var_dump($a);
+//        die('dupa');
         $this->_setUpAuth();
         $this->_checkAdminAccess();
 //        $this->Security->blackHoleCallback = 'blackhole';

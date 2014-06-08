@@ -634,12 +634,12 @@ body.admin{
 
 .dashboard_view dt{
     color: #555;
-    font-size: 12px;
+    font-size: 14px;
     height:20px;
 }
 
 .dashboard_view dd{
-    font-size:26px;
+    font-size:32px;
     color:#000;
     margin-bottom:10px;
 }
