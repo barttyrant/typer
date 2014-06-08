@@ -3,4 +3,5 @@
 /Config/email.php
 /tmp/cache/*
 /tmp/logs/*
+/tmp/feeds/*
 /nbproject
