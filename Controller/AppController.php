@@ -18,9 +18,9 @@ class AppController extends Controller {
         'FlashReporting.Report',
         'FormFiltering.FormFilter',
         'MathCaptcha',
-        'Security' => array(
-             'csrfUseOnce' => false
-        )
+//        'Security' => array(
+//             'csrfUseOnce' => false
+//        )
     );   
     
     
@@ -30,7 +30,7 @@ class AppController extends Controller {
     public function beforeFilter(){
         $this->_setUpAuth();
         $this->_checkAdminAccess();
-        $this->Security->blackHoleCallback = 'blackhole';
+//        $this->Security->blackHoleCallback = 'blackhole';
         $this->loggedUser = $this->Auth->user();                
         $this->set('pageLinks', $this->_getPageLinks());
         

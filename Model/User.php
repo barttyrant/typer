@@ -78,23 +78,23 @@ class User extends AppModel {
                     'message' => __('The lenght of this field must be between 2 and 30 characters', true)
                 ),
             ),
-//            'gender' => array(
-//                'zero_one' => array(
-//                    'rule' => array('inList', array(self::GENDER_FEMALE, self::GENDER_MALE)),
-//                    'message' => __('Hmmm, sorry but this gender looks a bit strange even for these days...', true)
-//                )
-//            ),
-//            'password_' => array(
-//                'between' => array(
-//                    'rule' => array('between', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
-//                    'message' => __('The lenght of Your password must be between %1$s and %2$s characters', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
-//                    'allowEmpty' => false
-//                ),
-//                'repeat_valid' => array(
-//                    'rule' => '_repeatValid',
-//                    'message' => __('Passwords must be equal', true),
-//                )
-//            )
+            'gender' => array(
+                'zero_one' => array(
+                    'rule' => array('inList', array(self::GENDER_FEMALE, self::GENDER_MALE), false),
+                    'message' => __('Hmmm, sorry but this gender looks a bit strange even for these days...', true)
+                )
+            ),
+            'password_' => array(
+                'between' => array(
+                    'rule' => array('between', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
+                    'message' => __('The lenght of Your password must be between %1$s and %2$s characters', self::PASSWORD_MIN_LENGTH, self::PASSWORD_MAX_LENGTH),
+                    'allowEmpty' => false
+                ),
+                'repeat_valid' => array(
+                    'rule' => 'repeatValid',
+                    'message' => __('Passwords must be equal', true),
+                )
+            )
         );
     }
 
@@ -109,6 +109,8 @@ class User extends AppModel {
             'role' => self::ROLE_USER,
             'status' => self::STATUS_NEW
         );
+
+        unset($data['User']['admin']);
 
         if (isset($data['User'])) {
             $data = $data['User'];
@@ -133,7 +135,8 @@ class User extends AppModel {
         );
     }
 
-    protected function _repeatValid($field) {
+    public function repeatValid($field) {
+
         return
                 !empty($this->data['User']['password_']) && !empty($this->data['User']['password_repeat']) && $this->data['User']['password_'] == $this->data['User']['password_repeat'];
     }
