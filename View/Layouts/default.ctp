@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title><?php echo $title_for_layout; ?></title>
+        <meta name="robots" content="noindex">
         <?php echo $this->Html->meta('description', $metaDescription); ?>
         <?php echo $this->Html->meta('keywords', $metaKeywords); ?>
         <?php echo $this->Html->meta('charset', 'utf-8'); ?>
