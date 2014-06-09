@@ -124,7 +124,7 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 $this->Report->success(__('Logged in successfuly', true), array(
-                    'autohide' => false,
+                    'autohide' => true,
                     'redirect' => $this->Auth->redirect()
                 ));
                 return;

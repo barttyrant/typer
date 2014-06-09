@@ -29,19 +29,19 @@ function flashMessages(){
         $(this).slideUp(200);
     });
     
-    //autohide
-    $('div.flashMessage.autohide').each(function(){
-        var classAttr = $(this).attr('class');
-        var hideDelay = (classAttr).substring((classAttr).lastIndexOf('hide_') + 5);
-        if(hideDelay !== undefined){
-            $(this).delay(hideDelay).slideUp(200);
-        }
+    //hide on click
+    $('div.flashMessage .closeButton img').bind('click', function(){
+        $(this).parent().parent().slideUp(200);
     });
 
-    //hide on click
-    $('div.flashMessage').bind('click', function(){
-        $(this).slideUp(200);
-    });
+    //autohide
+//    $('div.flashMessage.autohide').each(function(){
+//        var classAttr = $(this).attr('class');
+//        var hideDelay = (classAttr).substring((classAttr).lastIndexOf('hide_') + 5);
+//        if(hideDelay !== undefined){
+//            $(this).delay(hideDelay).slideUp(200);
+//        }
+//    });
 }
 
 
