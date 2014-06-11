@@ -1,6 +1,8 @@
 <?php
+
 App::uses('AppModel', 'Model');
 App::uses('simple_html_dom', 'Vendor');
+
 /**
  * Event Model
  *
@@ -9,11 +11,11 @@ App::uses('simple_html_dom', 'Vendor');
  */
 class Event extends AppModel {
 
-	public $displayField = 'title';
-	public $hasMany = array('Bet', 'Odd');
-    
+    public $displayField = 'title';
+    public $hasMany = array('Bet', 'Odd');
+
     const CLOSE_EVENT_BEFORE_START = 1800;
-    
+
     public $sources = array(
         array(
             'label' => 'FULL_TIME_OUTCOME',
@@ -22,211 +24,95 @@ class Event extends AppModel {
         array(
             'label' => 'FULL_TIME_OUTCOME_DC',
             'url' => 'https://pl.betclic.com/sport/eventdetail.aspx?id=122&t=Ftb_Dbc',
-        ),       
+        ),
     );
-    
-    
-    public function saveFetchedInfo($events){
-        if(empty($events)){
-            return false;
-        }
-        $evSaved = $odSaved = $odUpdat = 0;
-        
-        
-        foreach($events as $eventType => $evs){
-            
-            foreach ($evs as $ev) {
-                $oddsNames = !empty($ev['labels']['odds']) ? $ev['labels']['odds'] : false;
-                $dateStr = !empty($ev['labels']['dateStr']) ? $ev['labels']['dateStr'] : false;
 
-                if ($oddsNames && $dateStr) {
-                    $dateStr = trim(substr($dateStr, stripos($dateStr, ' ')));
-                    $dateStr = trim(substr($dateStr, 0, stripos($dateStr, ' ')));
-                    
+    public function saveFetchedInfo($events) {
 
-                    $date = '2012-06-' . $dateStr;
+        foreach($events as $event){
 
-                    if (!empty($ev['events'])) {
-                        foreach ($ev['events'] as $evt) {
-                            $odds = array();
-                            $eventName = !empty($evt[1]) ? $evt[1] : false;
-                            $time = !empty($evt[0]) ? $evt[0] : false;
-                            for ($i = 1; $i <= count($oddsNames); $i++) {
-                                $odds[] = array(
-                                    'name' => $oddsNames[$i-1],
-                                    'value' => str_replace(',', '.', $evt[$i+1])
-                                );
-                            }
-                            
-                            $dateDay = $date;
-                            $dateFull = $dateDay . ' ' . $time . ':00';  
-                            
-                            $startDate = date('Y-m-d H:i:s', strtotime($dateFull));
-                            
-                            $eventData = array(
-                                'title' => $eventName,
-                                'start_date' => $startDate,
-                                'hash' => md5($eventName . ' - ' . $date),
-                                'description' => false,
-                            );
-                            
-                            $this->contain = false;
-                            $eventRecord = $this->findByHash($eventData['hash']);
-                            
-                            if(empty($eventRecord)){
-                                $this->create();
-                                if($this->save(array('Event' => $eventData))){
-                                    $evSaved++;                                    
-                                }              
-                                $evtId = $this->getLastInsertID();
-                            }
-                            else{
-                                $evtId = $eventRecord['Event']['id'];
-                            }
-                            foreach ($odds as $oddData) {
-                                $oddData['event_id'] = $evtId;
-                                $oddData['hash'] = md5($evtId . ' - ' . $oddData['name']);
-                                $this->Odd->contain = false;
-                                $oddRecord = $this->Odd->findByHash($oddData['hash']);
+            $eventRecord = $this->findByHash($event['Event']['hash']);
 
-                                if (empty($oddRecord)) {
-                                    $this->Odd->create();
-                                    if ($this->Odd->save(array('Odd' => $oddData))) {
-                                        $odSaved++;
-                                    }
-                                } else {
-                                    if ((float) $oddData['value'] != $oddRecord['Odd']['value']) {
-                                        if ($this->Odd->updateAll(array(
-                                                'Odd.value' => (float) $oddData['value']
-                                                ), array('Odd.id' => $oddRecord['Odd']['id']))) {
-                                            $odUpdat++;
-                                            $this->log('Updated odd ' . $oddRecord['Odd']['id'].  ' from ' . $oddRecord['Odd']['value'] . ' to ' . $oddData['value'], 'odds_update');
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            if(empty($eventRecord)){
+                $this->create();
+                $saved = $this->save(array('Event' => $event['Event']));
+
+                if($saved){
+                    $this->log('INF: Saved new event ' . json_encode($event['Event']), 'odder');
+                }
+                else{
+                    $this->log('ERR: Unable to save new event ' . json_encode($event['Event']), 'odder');
                 }
             }
+
+            
+
         }
-        
-        return(array(
-            'evSaved' => $evSaved,
-            'odSaved' => $odSaved,
-            'odUpdat' => $odUpdat
-        ));
+
+//        return(array(
+//            'evSaved' => $evSaved,
+//            'odSaved' => $odSaved,
+//            'odUpdat' => $odUpdat
+//        ));
     }
-    
-    
-    
-    public function fetchEventsInfo($sources = null){        
-        
-        if(is_null($sources)){
-            $sources = $this->sources;
+
+    public function fetchEventsInfo($sources = null) {
+
+        $fileName = 'betcklick_feed_' . date('Y-m-d H') . '.xml';
+        $filePath = TMP . 'feeds' . DS . $fileName;
+
+        $eventsInfo = array();
+
+        if (!file_exists($filePath)) {
+            $get = file_get_contents('http://xml.cdn.betclic.com/odds_en.xml');
+            $put = file_put_contents($filePath, $get);
         }
-        
-        $return = array();
-        
-        foreach ($sources as $src) {
-            $url = $src['url'];
-            $label = $src['label'];
 
-            $ch = curl_init();
-            $timeout = 30;
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            
-            $fileName = md5($url . date('Y-m-d H'));
-            $fullFileName = APP . 'tmp' . DS . 'feeds' . DS . $fileName;
-            
-            if(!file_exists($fullFileName)){
-                $data = curl_exec($ch);
-                file_put_contents($fullFileName, $data);
-            }
-            else{
-                $data = file_get_contents($fullFileName);
-            }
-            
-            curl_close($ch);
-            $events = array();
-            
-            if (!empty($data)) {
 
-                $data = substr($data, stripos($data, '<!-- Fin bet live -->') + strlen('<!-- Fin bet live -->'));
-                $data = trim(substr($data, 0, stripos($data, '<!-- Fin Tableau -->')));               
+        if (file_exists($filePath)) {
+            $xmlFeed = new SimpleXMLElement(file_get_contents($filePath));
 
-                $html = new simple_html_dom();
+            $xpathMatches = '//sport/event[@name="World Cup"]/match[@live_id!=""]';
+            $wc2014Events = $xmlFeed->xpath($xpathMatches);
 
-                // Load from a string  
-                $html->load("<html><body>$data</body></html>");
+            foreach ($wc2014Events as $match) {
 
-                $tables = $html->find('table table');
+                $event_id = (string) ($match->attributes()->id);
 
-                foreach ($tables as $table) {
-                    $attrs = $table->attr;
+                // Event
 
-                    if (!is_array($attrs) || empty($attrs['id'])) {
-                        continue;
-                    }
+                $aEventData = array(
+                    'Event' => array(
+                        'id' => $event_id,
+                        'title' => (string) $match->attributes()->name,
+                        'start_date' => (string) $match->attributes()->start_date,
+                    )
+                );
 
-                    $id = trim($attrs['id']);
+                $aEventData['Event']['hash'] = md5('IcWc2014' . json_encode($aEventData['Event']));
 
-                    if (preg_match('/^(ctl00_cpMain_repTypeAndContent_ctl[0-9]+_ctl){1}.+(_TitleBox_tbl){1}$/', $id, $m)) {
-                        // event header
-                        $index = str_replace(array($m[1], $m[2]), array('', ''), $m[0]);
+                // Odds
 
-                        $headerTableTds = $html->find('#' . $id . ' table tr td');
-                        $dateStr = $headerTableTds[0];
-                        $dateStr = trim(strip_tags($dateStr->text()));
-                        $oddLabels = array();
+                $matchOdds = $match->xpath('bets/bet[@name="Match Result" or @name="Double Chance"]/choice');
 
-                        for ($i = 1; $i < count($headerTableTds); $i++) {
-                            $node = $headerTableTds[$i];
-                            $nodeText = trim(strip_tags($node->text()));
-                            if (!empty($nodeText)) {
-                                $oddLabels[] = $nodeText;
-                            }
-                        }
-
-                        $events[$index]['labels'] = array(
-                            'dateStr' => $dateStr,
-                            'odds' => $oddLabels
-                        );
-                    } elseif (preg_match('/^(ctl00_cpMain_repTypeAndContent_ctl[0-9]+_ctl){1}.+(_ContentBox_tbl){1}$/', $id, $m)) {
-                        // event odds table
-                        $index = str_replace(array($m[1], $m[2]), array('', ''), $m[0]);
-
-                        $eventRows = $html->find('#' . $id . ' table tr.evtRow');
-                        
-                        $timeStart = null;
-                        for ($i = 0; $i < count($eventRows); $i++) {
-                            $rowNode = $eventRows[$i];
-                            $tds = $rowNode->find('td');
-                            foreach ($tds as $k => $td) {
-                                $tdText = trim(strip_tags(str_replace('&nbsp;', '', ($td->text()))));
-                                if (!empty($tdText)) {
-                                    if(preg_match('/^[0-9]{2}:[0-9]{2}$/', $tdText)){
-                                        $timeStart = $tdText;                                        
-                                    }
-                                    else{
-                                        $events[$index]['events'][$i][] = $tdText;
-                                    }
-                                }
-                            }
-                            $events[$index]['events'][$i][-1] = $timeStart;
-                            ksort($events[$index]['events'][$i]);
-                            $events[$index]['events'][$i] = array_values($events[$index]['events'][$i]);
-                        }
-                    }
+                foreach ($matchOdds as $odd) {
+                    $odd_tmp = array(
+                        'id' => (string) $odd->attributes()->id,
+                        'name' => (string) str_replace('%', '', $odd->attributes()->name),
+                        'odd' => round((1.05) * (float) (string) str_replace('%', '', $odd->attributes()->odd), 2),
+                        'event_id' => $event_id
+                    );
+                    $odd_tmp['hash'] = md5('IcWc2014' . json_encode($odd_tmp));
+                    $aEventData['Odd'][] = $odd_tmp;
                 }
+
+                $eventsInfo[md5(json_encode($aEventData))] = $aEventData;
             }
-            
-            $return[$label] = array_values($events);
+
+            return $eventsInfo;
         }
-        
-        return $return;
     }
 
 }
+
+
