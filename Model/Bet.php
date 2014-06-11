@@ -107,7 +107,7 @@ class Bet extends AppModel {
     }
     
     
-    protected function _validOnePerUserPerEvent($value) {
+    public function _validOnePerUserPerEvent($value) {
         return true;
     }
     
