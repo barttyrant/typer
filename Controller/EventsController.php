@@ -155,7 +155,7 @@ class EventsController extends AppController {
             )); return;            
         }
         else{
-            $this->Report->error(__('Unable to update events/odds. Something is fuched up :/', true), array(
+            $this->Report->error(__('Unable to update events/odds. Something is fucked up :/', true), array(
                 'redirect' => $this->referer()
             ));
         }
