@@ -63,25 +63,25 @@ class Event extends AppModel {
                         $this->log('INF: Saved new odd ' . json_encode($odd), 'odder');
                     }
                 } else {
-                    $hashAgain = md5('IcWc2014' . json_encode(array(
-                                'id' => $oddRecord['Odd']['id'],
-                                'name' => $oddRecord['Odd']['name'],
-                                'value' => $oddRecord['Odd']['value'],
-                                'event_id' => $oddRecord['Odd']['event_id'],
-                                'hash' => $oddRecord['Odd']['hash']
-                    )));
 
-                    if ($hashAgain == $oddRecord['Odd']['hash']) {
+                    if ($odd['hash'] == $oddRecord['Odd']['hash']) {
                         continue;
                     } else {
+//                        continue;
                         $updated = $this->Odd->updateAll(array(
                             'name' => '"' . trim($odd['name']) . '"',
+                            'hash' => '"' . trim($odd['hash']) . '"',
                             'value' => $odd['value']
                                 ), array('Odd.id' => $oddRecord['Odd']['id']));
 
                         if ($updated) {
                             $odUpdat++;
-                            $this->log('INF: Updated odd ' . json_encode($oddRecord) . ' => ' . json_encode($odd), 'odder');
+                            $this->log('INF: Updated odd ' . json_encode(array(
+                                'name' => $oddRecord['Odd']['name'],
+                                'value' => $oddRecord['Odd']['value'],
+                                'value' => $oddRecord['Odd']['event_id'],
+                                'hash' => $oddRecord['Odd']['hash'],
+                            )) . ' => ' . json_encode($odd), 'odder');
                         }
                     }
                 }
