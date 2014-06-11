@@ -14,7 +14,7 @@ class Event extends AppModel {
     public $displayField = 'title';
     public $hasMany = array('Bet', 'Odd');
 
-    const CLOSE_EVENT_BEFORE_START = 1800;
+    const CLOSE_EVENT_BEFORE_START = 900;
 
     public $sources = array(
         array(
@@ -29,31 +29,70 @@ class Event extends AppModel {
 
     public function saveFetchedInfo($events) {
 
-        foreach($events as $event){
+        $evSaved = $odSaved = $odUpdat = 0;
+
+
+
+        foreach ($events as $event) {
+
+            // saving event
 
             $eventRecord = $this->findByHash($event['Event']['hash']);
 
-            if(empty($eventRecord)){
+            if (empty($eventRecord)) {
                 $this->create();
                 $saved = $this->save(array('Event' => $event['Event']));
 
-                if($saved){
+                if ($saved) {
+                    $evSaved++;
                     $this->log('INF: Saved new event ' . json_encode($event['Event']), 'odder');
-                }
-                else{
-                    $this->log('ERR: Unable to save new event ' . json_encode($event['Event']), 'odder');
                 }
             }
 
-            
+            // processing odds
 
+            foreach ($event['Odd'] as $odd) {
+                $oddRecord = $this->Odd->findById($odd['id']);
+
+                if (empty($oddRecord)) {
+                    $this->Odd->create();
+                    $saved = $this->Odd->save(array('Odd' => $odd));
+
+                    if ($saved) {
+                        $odSaved++;
+                        $this->log('INF: Saved new odd ' . json_encode($odd), 'odder');
+                    }
+                } else {
+                    $hashAgain = md5('IcWc2014' . json_encode(array(
+                                'id' => $oddRecord['Odd']['id'],
+                                'name' => $oddRecord['Odd']['name'],
+                                'value' => $oddRecord['Odd']['value'],
+                                'event_id' => $oddRecord['Odd']['event_id'],
+                                'hash' => $oddRecord['Odd']['hash']
+                    )));
+
+                    if ($hashAgain == $oddRecord['Odd']['hash']) {
+                        continue;
+                    } else {
+                        $updated = $this->Odd->updateAll(array(
+                            'name' => '"' . trim($odd['name']) . '"',
+                            'value' => $odd['value']
+                                ), array('Odd.id' => $oddRecord['Odd']['id']));
+
+                        if ($updated) {
+                            $odUpdat++;
+                            $this->log('INF: Updated odd ' . json_encode($oddRecord) . ' => ' . json_encode($odd), 'odder');
+                        }
+                    }
+                }
+            }
         }
 
-//        return(array(
-//            'evSaved' => $evSaved,
-//            'odSaved' => $odSaved,
-//            'odUpdat' => $odUpdat
-//        ));
+        return(array(
+            'evSaved' => $evSaved,
+            'odSaved' => $odSaved,
+            'odUpdat' => $odUpdat
+        ));
     }
 
     public function fetchEventsInfo($sources = null) {
@@ -99,7 +138,7 @@ class Event extends AppModel {
                     $odd_tmp = array(
                         'id' => (string) $odd->attributes()->id,
                         'name' => (string) str_replace('%', '', $odd->attributes()->name),
-                        'odd' => round((1.05) * (float) (string) str_replace('%', '', $odd->attributes()->odd), 2),
+                        'value' => round((Odd::ROUND_UP_EVENT_ODDS_FLOAT) * (float) (string) str_replace('%', '', $odd->attributes()->odd), 2),
                         'event_id' => $event_id
                     );
                     $odd_tmp['hash'] = md5('IcWc2014' . json_encode($odd_tmp));
@@ -114,5 +153,3 @@ class Event extends AppModel {
     }
 
 }
-
-

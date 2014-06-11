@@ -52,4 +52,6 @@ class Odd extends AppModel {
 		)
 	);
 
+        const ROUND_UP_EVENT_ODDS_FLOAT = 1.05;
+
 }
