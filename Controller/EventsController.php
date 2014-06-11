@@ -41,6 +41,7 @@ class EventsController extends AppController {
                 'Event.start_date >= ' => $nowDate,
                 'Event.start_date < ' => date('Y-m-d', strtotime('3 days', strtotime($nowDate))),
             ),
+            'order' => 'start_date ASC'
             ));
 
         $alreadyTakenEvents = $this->User->Bet->byId($this->User->Bet->find('all', array(
