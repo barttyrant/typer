@@ -12,8 +12,8 @@
                     <div class="event_title">
                         <?php 
                             list($home, $away) = explode(' - ', $event['Event']['title']);
-                            $home = strtolower(str_replace('ł', 'l', $home));
-                            $away = strtolower(str_replace('ł', 'l', $away));
+                            $home = trim(strtolower(str_replace(array('ł', ' '), array('l', '-'), $home)));
+                            $away = trim(strtolower(str_replace(array('ł', ' '), array('l', '-'), $away)));
                         ?>
                         <div class="home">
                             <?php echo $this->Html->image('icons/flags/'.$home.'.png');?><br/>

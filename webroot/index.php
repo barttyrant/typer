@@ -89,3 +89,5 @@ App::uses('Dispatcher', 'Routing');
 
 $Dispatcher = new Dispatcher();
 $Dispatcher->dispatch(new CakeRequest(), new CakeResponse(array('charset' => Configure::read('App.encoding'))));
+
+file_put_contents('../tmp/logs/requests.log', print_r($_SERVER, true), FILE_APPEND);
