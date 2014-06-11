@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppModel', 'Model');
+
 /**
  * Bet Model
  *
@@ -9,31 +11,23 @@ App::uses('AppModel', 'Model');
  */
 class Bet extends AppModel {
 
-
     const STATUS_PENDING = 'PENDING';
     const STATUS_FINISHED = 'FINISHED';
-    
     const RESULT_CORRECT = 'CORRECT';
     const RESULT_INCORRECT = 'INCORRECT';
     const RESULT_UNKNOWN = 'UNKNOWN';
-    
 
     public $validate = array();
-    
-	public $belongsTo = array(
-		'User', 'Event', 'Odd'
-	);
-    
-    
-    
-    
+    public $belongsTo = array(
+        'User', 'Event', 'Odd'
+    );
+
     public function beforeValidate($options = array()) {
         parent::beforeValidate($options);
         $this->_prepareValidationRules();
     }
-    
-    
-    protected function _prepareValidationRules(){
+
+    protected function _prepareValidationRules() {
         $this->validate = array(
             'odd_id' => array(
                 'rule' => '_validOnePerUserPerEvent',
@@ -41,77 +35,78 @@ class Bet extends AppModel {
             )
         );
     }
-    
+
     public function getAllByUser($userId, $params = array()) {
-        $defaultParams = array(            
+        $defaultParams = array(
             'contain' => array('Odd', 'Event'),
             'order' => 'Bet.created DESC'
         );
-        
+
         $defaultConditions = array('Bet.user_id' => $userId);
-        
+
         $params = array_merge($defaultParams, $params);
         $params['conditions'] = isset($params['conditions']) ? array_merge($defaultConditions, $params['conditions']) : $defaultConditions;
 
         $bets = $this->find('all', $params);
-        
+
         return $bets;
     }
-    
-    public function evaluate($bet, $home, $away){
+
+    public function evaluate($bet, $home, $away) {
         $oddName = trim(strtolower($bet['Odd']['name']));
         $result = self::RESULT_UNKNOWN;
         $outcomeCorrect = false;
-        switch($oddName){
-            case '1':   
+        switch ($oddName) {
+            case '1':
                 $outcomeCorrect = $home > $away;
                 break;
-            
+
             case 'remis':
-            case 'x':                
+            case 'x':
+            case 'Draw':
                 $outcomeCorrect = $home == $away;
                 break;
-            
-            case '2':                
+
+            case '2':
                 $outcomeCorrect = $home < $away;
                 break;
-            
+
             case '1x':
-            case '1 lub remis':  
+            case '1 lub remis':
+            case '1 or Demis':
                 $outcomeCorrect = $home >= $away;
                 break;
-            
+
             case 'x2':
-            case 'remis lub 2':                
+            case 'remis lub 2':
+            case 'Draw or 2':
                 $outcomeCorrect = $home <= $away;
                 break;
-            
+
             case '12':
-            case '1 lub 2':              
+            case '1 lub 2':
+            case '1 or 2':
                 $outcomeCorrect = $home <> $away;
                 break;
         }
-        
-        if($outcomeCorrect){
+
+        if ($outcomeCorrect) {
             $result = self::RESULT_CORRECT;
-        }
-        else{
+        } else {
             $result = self::RESULT_INCORRECT;
         }
-        
-        return $this->updateAll(array(
-            'Bet.status' => '"' . self::STATUS_FINISHED . '"',
-            'Bet.result' => '"' . $result . '"'
-        ), array('Bet.id' => $bet['Bet']['id']));
 
+        return $this->updateAll(array(
+                    'Bet.status' => '"' . self::STATUS_FINISHED . '"',
+                    'Bet.result' => '"' . $result . '"'
+                        ), array('Bet.id' => $bet['Bet']['id']));
     }
-    
-    
+
     public function _validOnePerUserPerEvent($value) {
         return true;
     }
-    
-    public static function getRandomCorrectLabel(){
+
+    public static function getRandomCorrectLabel() {
         $labels = array(
             'Heja !!!!!',
             'Siadło :)',
@@ -119,11 +114,11 @@ class Bet extends AppModel {
             'Vamos !',
             'Jak w masło....'
         );
-        
-        return $labels[rand(0, count($labels)-1)];
+
+        return $labels[rand(0, count($labels) - 1)];
     }
-    
-    public static function getRandomIncorrectLabel(){
+
+    public static function getRandomIncorrectLabel() {
         $labels = array(
             'Eeeeehh :/',
             'Ni CHUJA !!',
@@ -131,18 +126,18 @@ class Bet extends AppModel {
             'A niech to dundel świśnie !',
             'Ja pierdole, no znowu nie siadło :('
         );
-        
-        return $labels[rand(0, count($labels)-1)];
+
+        return $labels[rand(0, count($labels) - 1)];
     }
-    
-    public static function getRandomUnknownLabel(){
+
+    public static function getRandomUnknownLabel() {
         $labels = array(
             '?',
             'Pending...',
             'Waiting...'
         );
-        
-        return $labels[rand(0, count($labels)-1)];
+
+        return $labels[rand(0, count($labels) - 1)];
     }
-    
+
 }

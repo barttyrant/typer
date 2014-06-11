@@ -16,17 +16,6 @@ class Event extends AppModel {
 
     const CLOSE_EVENT_BEFORE_START = 900;
 
-    public $sources = array(
-        array(
-            'label' => 'FULL_TIME_OUTCOME',
-            'url' => 'https://pl.betclic.com/sport/eventdetail.aspx?id=122&t=Ftb_Mr3',
-        ),
-        array(
-            'label' => 'FULL_TIME_OUTCOME_DC',
-            'url' => 'https://pl.betclic.com/sport/eventdetail.aspx?id=122&t=Ftb_Dbc',
-        ),
-    );
-
     public function saveFetchedInfo($events) {
 
         $evSaved = $odSaved = $odUpdat = 0;
