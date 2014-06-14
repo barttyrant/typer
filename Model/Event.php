@@ -26,7 +26,7 @@ class Event extends AppModel {
 
             // saving event
 
-            $eventRecord = $this->findByHash($event['Event']['hash']);
+            $eventRecord = $this->findById($event['Event']['id']);
 
             if (empty($eventRecord)) {
                 $this->create();
