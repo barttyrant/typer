@@ -40,7 +40,7 @@ class EventsController extends AppController {
             'contain' => array('Odd'),
             'conditions' => array(
                 'Event.start_date > ' => $nowDate,
-                'Event.start_date < ' => date('Y-m-d', strtotime('3 days', strtotime($nowDate))),
+                'Event.start_date < ' => date('Y-m-d', strtotime('4 days', strtotime($nowDate))),
             ),
             'order' => 'start_date ASC'
             ));
