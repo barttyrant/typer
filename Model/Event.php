@@ -113,7 +113,7 @@ class Event extends AppModel {
                     'Event' => array(
                         'id' => $event_id,
                         'title' => (string) $match->attributes()->name,
-                        'start_date' => (string) $match->attributes()->start_date,
+                        'start_date' => date('Y-m-d H:i:s', strtotime((string) $match->attributes()->start_date) + 3600),
                     )
                 );
 
