@@ -33,7 +33,7 @@ class EventsController extends AppController {
         }
 
 //        $nowDate = date('Y-m-d');
-        $nowDate = date('Y-m-d H:i:s', '+5 seconds');
+        $nowDate = date('Y-m-d H:i:s', strtotime('+5 seconds'));
 //        $nowDate = '2012-06-08';
 
         $events = $this->Event->find('all', array(
