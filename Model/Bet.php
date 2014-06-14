@@ -63,7 +63,7 @@ class Bet extends AppModel {
 
             case 'remis':
             case 'x':
-            case 'Draw':
+            case 'draw':
                 $outcomeCorrect = $home == $away;
                 break;
 
@@ -73,13 +73,13 @@ class Bet extends AppModel {
 
             case '1x':
             case '1 lub remis':
-            case '1 or Demis':
+            case '1 or draw':
                 $outcomeCorrect = $home >= $away;
                 break;
 
             case 'x2':
             case 'remis lub 2':
-            case 'Draw or 2':
+            case 'draw or 2':
                 $outcomeCorrect = $home <= $away;
                 break;
 
