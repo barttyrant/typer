@@ -32,13 +32,14 @@ class EventsController extends AppController {
             ));
         }
 
-        $nowDate = date('Y-m-d');
+//        $nowDate = date('Y-m-d');
+        $nowDate = date('Y-m-d H:i:s', '+5 seconds');
 //        $nowDate = '2012-06-08';
 
         $events = $this->Event->find('all', array(
             'contain' => array('Odd'),
             'conditions' => array(
-                'Event.start_date >= ' => $nowDate,
+                'Event.start_date > ' => $nowDate,
                 'Event.start_date < ' => date('Y-m-d', strtotime('3 days', strtotime($nowDate))),
             ),
             'order' => 'start_date ASC'
