@@ -20,8 +20,6 @@ class Event extends AppModel {
 
         $evSaved = $odSaved = $odUpdat = 0;
 
-
-
         foreach ($events as $event) {
 
             // saving event
@@ -56,7 +54,6 @@ class Event extends AppModel {
                     if ($odd['hash'] == $oddRecord['Odd']['hash']) {
                         continue;
                     } else {
-//                        continue;
                         $updated = $this->Odd->updateAll(array(
                             'name' => '"' . trim($odd['name']) . '"',
                             'hash' => '"' . trim($odd['hash']) . '"',
