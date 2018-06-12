@@ -20,14 +20,14 @@
             <div id="topbar">
                 <?php
                 echo $this->Html->image('typerlogo.png', array(
-                    'title' => 'Typer biurowy', 'alt' => 'Typer biurowy',
+                    'title' => Configure::read('Application.Name'), 'alt' => Configure::read('Application.Name'),
                     'url' => '/', 'class' => 'logo'
                 ));
                 ?>
                 <div class="koko">
                     <?php
-                    echo $this->Html->image('brazil.png', array(
-                        'title' => 'World Cup 2014 Brazil', 'alt' => 'World Cup 2014 Brazil',
+                    echo $this->Html->image('competition_logo.png', array(
+                        'title' => Configure::read('Application.WorldCupName'), 'alt' => Configure::read('Application.WorldCupName'),
                     ));
                     ?>                                        
                 </div>

@@ -334,3 +334,8 @@ Cache::config('_cake_model_', array(
     'serialize' => ($engine === 'File'),
     'duration' => $duration
 ));
+
+$appSettingsPath = ROOT . DS . APP_DIR . '/Config/settings.php';
+if(file_exists($appSettingsPath)){
+	require_once($appSettingsPath);
+}

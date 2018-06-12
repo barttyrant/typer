@@ -1,26 +1,23 @@
 <?php
 
-
 App::uses('Controller', 'Controller');
 App::uses('User', 'Model');
 
 class AppController extends Controller {
     
     public $activePageLink = 'start';
-    public $metaDescription = 'Typer biurowy IC - 2014';
-    public $metaKeywords = 'Typer biurowy IC - 2014';
+    public $metaDescription = '[Meta Description]';
+    public $metaKeywords = '[Meta Keywords]';
     public $loggedUser = array();
     
     public $uses = array('User');
     
     public $components = array(
-        'Session', 'Auth', 
+        'Session',
+	    'Auth',
         'FlashReporting.Report',
         'FormFiltering.FormFilter',
         'MathCaptcha',
-//        'Security' => array(
-//             'csrfUseOnce' => false
-//        )
     );   
     
     
@@ -30,6 +27,7 @@ class AppController extends Controller {
     public function beforeFilter(){
         $this->_setUpAuth();
         $this->_checkAdminAccess();
+        $this->setupMetaData();
 //        $this->Security->blackHoleCallback = 'blackhole';
         $this->loggedUser = $this->Auth->user();                
         $this->set('pageLinks', $this->_getPageLinks());
@@ -37,8 +35,14 @@ class AppController extends Controller {
         if(stripos($this->action, 'admin') !== false){
             $this->activePageLink = 'admin';
         }
-        
-//        header('Content-Description: No i czego tu KURRRRRRWA szukasz? Weź spierdalaj !!');
+    }
+
+
+    public function setupMetaData(){
+    	$this->metaDescription = Configure::read('Application.MetaDescription');
+	    $this->metaKeywords= Configure::read('Application.MetaKeywords');
+
+
     }
     
     public function beforeRender(){
