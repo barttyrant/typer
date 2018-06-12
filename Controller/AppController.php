@@ -8,6 +8,7 @@ class AppController extends Controller {
     public $activePageLink = 'start';
     public $metaDescription = '[Meta Description]';
     public $metaKeywords = '[Meta Keywords]';
+    public $title_for_layout = '[Title]';
     public $loggedUser = array();
     
     public $uses = array('User');
@@ -41,8 +42,7 @@ class AppController extends Controller {
     public function setupMetaData(){
     	$this->metaDescription = Configure::read('Application.MetaDescription');
 	    $this->metaKeywords= Configure::read('Application.MetaKeywords');
-
-
+		$this->title_for_layout = Configure::read('Application.Name');
     }
     
     public function beforeRender(){
@@ -50,6 +50,7 @@ class AppController extends Controller {
             'activePageLink' => $this->activePageLink,
             'metaDescription' => $this->metaDescription,
             'metaKeywords' => $this->metaKeywords,
+            'title_for_layout' => $this->title_for_layout,
             'loggedUser' => $this->loggedUser
         ));        
         
