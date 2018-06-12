@@ -3,4 +3,4 @@ TERM=dumb
 export TERM 
 
 cd /home/barttyra/domains/typer-picodi.bartyr.pl/app
-./cake Odder fetch_events >> /home/barttyra/domains/bartyr.net/public_html/typer/app/tmp/logs/odds_update.log
+./cake Odder fetch_events >> /home/barttyra/domains/typer-picodi.bartyr.pl/app/tmp/logs/odds_update.log
