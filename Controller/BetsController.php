@@ -65,7 +65,7 @@ class BetsController extends AppController {
         
         $diff = $eventTime - $timeNow;
         
-        if(($diff) < Event::CLOSE_EVENT_BEFORE_START){
+        if(($diff) < Configure::read('Application.CloseEventBeforeStart')){
             $this->Report->info(__('Unable to create bet for You. This event is already closed ', true), array(
                 'redirect' => $this->referer(),
                 'autohide' => 5000

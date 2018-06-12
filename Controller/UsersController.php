@@ -265,8 +265,8 @@ class UsersController extends AppController {
 		$dateStartTxt = Configure::read( 'Application.TournamentStartDate' );
 		$dateEndTxt   = Configure::read( 'Application.TournamentEndDate' );
 
-		$dateStart = $dateStartTxt;
-		$dateEnd   = $dateEndTxt;
+		$dateStart = strtotime( $dateStartTxt );
+		$dateEnd   = strtotime( $dateEndTxt );
 
 		$now = strtotime( date( 'Y-m-d H:i:s' ) );
 
