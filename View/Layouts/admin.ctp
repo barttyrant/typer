@@ -15,20 +15,24 @@ DOCTYPE html>
     </head>
     <body class="admin">
         <div id="wrapper">
+
             <div id="topbar">
-                <?php echo $this->Html->image('typerlogo.png', array(
-                    'title' => 'Typer biurowy', 'alt' => 'Typer biurowy',
-                    'url'=> '/', 'class' => 'logo'
-                ));?>
-                <div class="koko">
-                    <?php echo $this->Html->image('chicken.png', array(
-                        'title' => 'Koko Euro 2012', 'alt' => 'Koko Euro 2012',
-                    ));?>                    
-                    <?php echo $this->Html->image('uefa_euro_2012_logo.png', array(
-                        'title' => 'Koko Euro 2012', 'alt' => 'Koko Euro 2012',
-                    ));?>                    
-                </div>
-            </div>
+                            <?php
+                            echo $this->Html->image('typerlogo.png', array(
+                                'title' => Configure::read('Application.Name'), 'alt' => Configure::read('Application.Name'),
+                                'url' => '/', 'class' => 'logo'
+                            ));
+                            ?>
+                            <div class="koko">
+                                <?php
+                                echo $this->Html->image('competition_logo.png', array(
+                                    'title' => Configure::read('Application.WorldCupName'), 'alt' => Configure::read('Application.WorldCupName'),
+                                ));
+                                ?>
+                            </div>
+                        </div>
+
+
             <?php echo $this->Session->flash();?>
             <?php echo $this->element('Layout/menu');?>                        
             <div id="content">

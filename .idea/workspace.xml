@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc32dd60-e9b3-4584-870c-b859bf3f789e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Config/settings.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Console/Command/UserShell.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/core.php" beforeDir="false" afterPath="$PROJECT_DIR$/Config/core.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AppController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/Elements/Layout/footer.ctp" beforeDir="false" afterPath="$PROJECT_DIR$/View/Elements/Layout/footer.ctp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/Layouts/default.ctp" beforeDir="false" afterPath="$PROJECT_DIR$/View/Layouts/default.ctp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/img/typerlogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/Config/settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/Layouts/admin.ctp" beforeDir="false" afterPath="$PROJECT_DIR$/View/Layouts/admin.ctp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,20 +15,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="core.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Config/core.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5985">
-              <caret line="333" column="40" selection-start-line="333" selection-start-column="40" selection-end-line="333" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="footer.ctp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="footer.ctp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/Elements/Layout/footer.ctp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
               <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Model/User.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="UsersController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Controller/UsersController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1340">
+              <caret line="267" column="8" selection-start-line="267" selection-start-column="8" selection-end-line="267" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.ctp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/View/Layouts/admin.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="263">
+              <caret line="16" column="26" lean-forward="true" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -47,11 +56,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="news.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/Elements/Layout/news.ctp">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file leaf-file-name="admin_links.ctp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/Elements/Layout/admin_links.ctp">
           <provider selected="true" editor-type-id="text-editor" />
@@ -60,8 +64,8 @@
       <file leaf-file-name="default.ctp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/Layouts/default.ctp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-368">
-              <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+            <state relative-caret-position="230">
+              <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="33" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -78,8 +82,8 @@
       <file leaf-file-name="settings.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Config/settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
+            <state relative-caret-position="190">
+              <caret line="10" column="73" lean-forward="true" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -104,11 +108,13 @@
       <find>menu</find>
       <find>1000px</find>
       <find>border-radiu</find>
+      <find>tournamentProgress</find>
+      <find>chicken.png</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/Config</dir>
-      <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/View</dir>
+      <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -121,9 +127,11 @@
         <option value="$PROJECT_DIR$/Controller/AppController.php" />
         <option value="$PROJECT_DIR$/Config/core.php" />
         <option value="$PROJECT_DIR$/webroot/css/style.css" />
-        <option value="$PROJECT_DIR$/Config/settings.php" />
         <option value="$PROJECT_DIR$/View/Layouts/default.ctp" />
         <option value="$PROJECT_DIR$/View/Elements/Layout/footer.ctp" />
+        <option value="$PROJECT_DIR$/Config/settings.php" />
+        <option value="$PROJECT_DIR$/Controller/UsersController.php" />
+        <option value="$PROJECT_DIR$/View/Layouts/admin.ctp" />
       </list>
     </option>
   </component>
@@ -166,6 +174,11 @@
             <path>
               <item name="typer" type="b2602c69:ProjectViewProjectNode" />
               <item name="typer" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="typer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="typer" type="462c0819:PsiDirectoryNode" />
               <item name="View" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -175,10 +188,9 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.remoteExternalTools" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="settings.editor.selected.configurable" value="editor.breadcrumbs" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -204,12 +216,12 @@
       <updated>1528664338698</updated>
       <workItem from="1528664339965" duration="1514000" />
       <workItem from="1528666877130" duration="1270000" />
-      <workItem from="1528769512704" duration="1130000" />
+      <workItem from="1528769512704" duration="1808000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3914000" />
+    <option name="totallyTimeSpent" value="4592000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -356,9 +368,6 @@
     <entry file="file://$PROJECT_DIR$/Controller/Component/MathCaptchaComponent.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Model/User.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Model/Event.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -366,13 +375,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-751">
-          <caret line="123" column="27" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -438,13 +440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/Layouts/default.ctp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-368">
-          <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/View/Layouts/login.ctp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
@@ -459,17 +454,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Config/settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/View/Elements/Layout/footer.ctp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model/User.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="73" lean-forward="true" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1340">
+          <caret line="267" column="8" selection-start-line="267" selection-start-column="8" selection-end-line="267" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/Layouts/default.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="33" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/Layouts/admin.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="16" column="26" lean-forward="true" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
         </state>
       </provider>
     </entry>
