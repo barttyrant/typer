@@ -178,7 +178,7 @@ define('LOG_ERROR', 2);
  */
 Configure::write('Session', array(
     'defaults' => 'php',
-    'cookie' => 'TyperZjebane'
+    'cookie' => 'TyperBartyr'
 ));
 
 /**

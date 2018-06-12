@@ -1,3 +1,4 @@
+/Cron
 /Config/env.php
 /Config/database.php
 /Config/email.php
@@ -5,4 +6,4 @@
 /tmp/logs/*
 /tmp/feeds/*
 /nbproject
-.idea/*
+/.idea/*

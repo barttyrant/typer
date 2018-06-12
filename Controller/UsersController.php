@@ -265,6 +265,9 @@ class UsersController extends AppController {
 		$dateStartTxt = Configure::read( 'Application.TournamentStartDate' );
 		$dateEndTxt   = Configure::read( 'Application.TournamentEndDate' );
 
+		$dateStart = $dateStartTxt;
+		$dateEnd   = $dateEndTxt;
+
 		$now = strtotime( date( 'Y-m-d H:i:s' ) );
 
 		$tournamentProgress = max( 0, round( 100 * ( ( $now - $dateStart ) / ( $dateEnd - $dateStart ) ), 2 ) ) . '%';

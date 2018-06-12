@@ -4,4 +4,4 @@ export TERM
 
 D=`date +"%Y-%m-%d_%R"`
 FIL=db_backup_$D.sql.gz
-/usr/local/mysql/bin/mysqldump barttyra_typer -u barttyra_typer --password=KJXSoWCQ | gzip -9 > /home/barttyra/backups/typer/${FIL}
+/usr/local/mysql/bin/mysqldump barttyra_typer -u barttyra_typer18 --password=kBj4YbPW | gzip -9 > /home/barttyra/backups/typer/${FIL}
