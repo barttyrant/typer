@@ -25,7 +25,7 @@
 
     <div class="dashboard_view static">
         <dt><?php echo __('Stake:', true); ?></dt>
-        <dd style="color: #32800f;"><strong><?php echo $stake + Configure::read('StakeBonus'); ?>zl.</strong></dd>
+        <dd style="color: #32800f;"><strong><?php echo $stake + Configure::read('StakeBonus'); ?>.</strong></dd>
 
         <dt><?php echo __('Tournament progress:', true); ?></dt>
         <dd><?php echo $tournamentProgress; ?></dd>
