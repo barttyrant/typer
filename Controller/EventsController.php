@@ -22,6 +22,12 @@ class EventsController extends AppController {
 		parent::beforeFilter();
 	}
 
+	public function beforeRender() {
+		$this->title_for_layout = 'Events | ' . $this->title_for_layout;
+		parent::beforeRender();
+	}
+
+
 
 	public function index() {
 		$this->activePageLink = 'events';

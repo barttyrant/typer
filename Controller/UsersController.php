@@ -33,6 +33,7 @@ class UsersController extends AppController {
 
 	function ranking() {
 		$this->activePageLink = 'ranking';
+		$this->title_for_layout = 'Ranking | ' . $this->title_for_layout;
 		$allUsers             = $this->User->find( 'all', array(
 			'contain'    => array(),
 			'conditions' => array( 'User.status' => User::STATUS_ACCEPTED )
